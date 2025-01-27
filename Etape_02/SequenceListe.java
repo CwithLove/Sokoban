@@ -1,4 +1,4 @@
-class SequenceList {
+class SequenceListe {
     ListeChainee tete, queue;
 
     void insereTete(int element) {
@@ -6,6 +6,8 @@ class SequenceList {
         if (this.queue == null) {
             this.queue = newElement;
         }
+        newElement.suiv = this.tete;
+        this.tete = newElement;
     }
 
     void insereQueue(int element) {
@@ -19,6 +21,9 @@ class SequenceList {
     }
 
     int extraitTete() {
+        if (estVide()) 
+            throw new RuntimeException("Sequence vide !");
+        
         int result;
         result = this.tete.val;
         this.tete = this.tete.suiv;

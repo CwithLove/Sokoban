@@ -36,6 +36,9 @@ public class SequenceTableau {
     }
 
     int extraitTete() {
+        if (estVide()) 
+            throw new RuntimeException("Sequence vide !");
+        
         int result = elements[start--];
         this.len--;
         return result;
