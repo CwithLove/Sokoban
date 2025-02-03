@@ -19,7 +19,7 @@ public class IterateurSequenceTableau implements Iterateur {
         int res =  this.sequence.elements[this.courant];
         this.precedant = this.courant;
         this.nbReste--;
-        if (this.courant < this.sequence.len - 1) {
+        if (this.courant <= this.sequence.len - 1) {
             this.courant++;
         } else {
             this.courant = 0;
@@ -29,6 +29,7 @@ public class IterateurSequenceTableau implements Iterateur {
 
     @Override
     public void supprime() {
+        System.out.println("precedant: " + this.precedant + " courant: " + this.courant);
         if (this.precedant == -1 || this.sequence.len == 0 || this.precedant == this.courant) {
             throw new IllegalStateException();
         }
@@ -40,6 +41,5 @@ public class IterateurSequenceTableau implements Iterateur {
             i = (i + 1) % this.sequence.len;
         }   
         this.sequence.len--;
-        
     }
 }

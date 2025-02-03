@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 
 public class SequenceTableau implements interfaceSequence {
     int[] elements;
@@ -18,43 +18,34 @@ public class SequenceTableau implements interfaceSequence {
 
     private void redimensionne() {
         if (this.len >= this.elements.length) {
-            int[] newElements = new int[elements.length * 2];
+            int newLen = this.len * 2;
+            int[] newElements = new int[newLen];
+            int aCopier = this.len;
             for (int i = 0; i < this.len; i++) {
                 newElements[i] = extraitTete();
             }
             this.elements = newElements;
+            this.start = 0;
+            this.len = aCopier;
         }
     }
 
     @Override
     public void insereTete(int element) {
         redimensionne();
-        System.out.println("\nlen: " + len + " start: " + start + " elements.length: " + elements.length);
         start -= 1;
+        this.len++;
         if (start < 0) {
             start = elements.length - 1;
         }
-        for (int i = 0; i < this.len; i++) {
-            elements[(start + i + 1) % elements.length] = elements[(start + i) % elements.length];
-        }
         elements[start] = element; 
-        this.len++;
-        System.out.println("len: " + len + " start: " + start + " elements.length: " + elements.length);
     }
 
     @Override
     public void insereQueue(int element) {
         redimensionne();
-        System.out.println("len: " + len + " start: " + start + " elements.length: " + elements.length);
-        if (start == 0) {
-            this.start = elements.length - 1;
-            elements[this.start] = element;
-        } else {
-            elements[(start + 1) % elements.length] = element;
-            this.start = 0;
-        }
+        this.elements[(start + this.len) % this.elements.length] = element;
         this.len++;
-        System.out.println("\nlen: " + len + " start: " + start + " elements.length: " + elements.length);
     }
 
     @Override
@@ -62,10 +53,11 @@ public class SequenceTableau implements interfaceSequence {
         if (estVide()) 
             throw new RuntimeException("Sequence vide !");
         
-        System.out.println("\nlen: " + len + " start: " + start + " elements.length: " + elements.length);
-        int result = elements[start--];
+        int result = elements[start++];
+        if (start >= elements.length) {
+            start = 0;
+        }
         this.len--;
-        System.out.println("len: " + len + " start: " + start + " elements.length: " + elements.length);
         return result;
     }
 

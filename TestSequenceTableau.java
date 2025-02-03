@@ -6,7 +6,8 @@ public class TestSequenceTableau {
 
     static int operation(SequenceTableau seq, int code) {
         int s;
-        System.out.println(seq);
+        System.out.println("\n" + seq);
+        System.out.println("code: " + code);
         switch (code) {
             case 0:
                 s = min;
@@ -47,6 +48,7 @@ public class TestSequenceTableau {
         count = 0;
         for (int i = 0; i < 1000; i++) {
             int code = r.nextInt(4);
+               
             int result = operation(s, code);
             if (code < 2) {
                 count++;
