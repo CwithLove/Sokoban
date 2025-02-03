@@ -46,9 +46,10 @@ public class SequenceTableau implements interfaceSequence {
     public void insereQueue(int element) {
         redimensionne();
         System.out.println("len: " + len + " start: " + start + " elements.length: " + elements.length);
-        if (start != -1)
-            elements[(start + len) % elements.length] = element;
-        else {
+        if (start == 0) {
+            this.start = elements.length - 1;
+            elements[this.start] = element;
+        } else {
             elements[(start + 1) % elements.length] = element;
             this.start = 0;
         }
