@@ -1,29 +1,45 @@
 public class IterateurSequenceTableau implements Iterateur {
-    int[] elements;
-    int precedant, courant;
+    SequenceTableau sequence;
+    int precedant, courant, nbReste;
 
     public IterateurSequenceTableau(SequenceTableau s) {
-        this.elements = s.elements;
+        this.sequence = s;
         this.courant = 0;
         this.precedant = -1;
+        this.nbReste = this.sequence.len;
     }
 
+    @Override
     public boolean aProchain() {
-        return this.elements[this.courant] != -1;
+        return this.nbReste > 0;
     }
 
+    @Override
     public int prochain() {
-        int result = this.elements[this.courant];
+        int res =  this.sequence.elements[this.courant];
         this.precedant = this.courant;
-        if (this.courant >= this.elements.length) {
-            this.courant = 0;
-        } else {
+        this.nbReste--;
+        if (this.courant < this.sequence.len - 1) {
             this.courant++;
+        } else {
+            this.courant = 0;
         }
-        return result;
+        return res;
     }
 
+    @Override
     public void supprime() {
-        this.elements[this.precedant] = -1;
+        if (this.precedant == -1 || this.sequence.len == 0 || this.precedant == this.courant) {
+            throw new IllegalStateException();
+        }
+        
+        this.courant = this.precedant;
+        int i = this.precedant;
+        for (int count = this.nbReste; count > 0; count--) {
+            this.sequence.elements[i] = this.sequence.elements[(i + 1) % this.sequence.len];
+            i = (i + 1) % this.sequence.len;
+        }   
+        this.sequence.len--;
+        
     }
 }

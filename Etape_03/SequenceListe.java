@@ -1,8 +1,18 @@
-class SequenceListe {
+class SequenceListe implements interfaceSequence {
     ListeChainee tete, queue;
 
-    void insereTete(int element) {
-        ListeChainee newElement = new ListeChainee(element, tete);
+    public SequenceListe() {
+        this.tete = null;
+        this.queue = null;
+    }
+
+    public Iterateur iterateur() {
+        return new IterateurSequenceListe(this);
+    }
+
+    @Override
+    public void insereTete(int element) {
+        ListeChainee newElement = new ListeChainee(element);
         if (this.queue == null) {
             this.queue = newElement;
         }
@@ -10,17 +20,21 @@ class SequenceListe {
         this.tete = newElement;
     }
 
-    void insereQueue(int element) {
-        ListeChainee newElement = new ListeChainee(element, null);
-        if (this.tete == null) {
+    @Override
+    public void insereQueue(int element) {
+        ListeChainee newElement = new ListeChainee(element);
+        if (this.queue == null || this.tete == null) {
+            this.queue = newElement;
             this.tete = newElement;
         } else {
             this.queue.suiv = newElement;
             this.queue = newElement;
         }
+        
     }
 
-    int extraitTete() {
+    @Override
+    public int extraitTete() {
         if (estVide()) 
             throw new RuntimeException("Sequence vide !");
         
@@ -33,7 +47,8 @@ class SequenceListe {
         return result;
     }
 
-    boolean estVide() {
+    @Override
+    public boolean estVide() {
         return this.tete == null;
     }
 

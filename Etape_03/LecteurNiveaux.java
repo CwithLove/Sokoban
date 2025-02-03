@@ -1,8 +1,8 @@
-import java.util.Scanner;
 import java.io.InputStream;
+import java.util.Scanner;
 
 public class LecteurNiveaux {
-    private Scanner my_scanner; // Vi sao phai can private? Vi my_scanner chi dung trong class nay
+    private final Scanner my_scanner; 
 
     public LecteurNiveaux(InputStream input) {
         my_scanner = new Scanner(input);

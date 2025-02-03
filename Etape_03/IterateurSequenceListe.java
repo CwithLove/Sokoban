@@ -11,10 +11,12 @@ public class IterateurSequenceListe implements Iterateur {
         this.courant = s.tete;
     }
 
+    @Override
     public boolean aProchain() {
         return this.courant != null;
     }
 
+    @Override
     public int prochain() {
         if (!aProchain()) 
             throw new NoSuchElementException();
@@ -30,6 +32,7 @@ public class IterateurSequenceListe implements Iterateur {
         return result;
     }
 
+    @Override
     public void supprime() {
         if (this.precedant == null) 
             throw new IllegalStateException("Appel de supprime sans appel préalable de prochain !");
