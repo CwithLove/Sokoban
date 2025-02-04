@@ -3,12 +3,14 @@ import java.util.NoSuchElementException;
 public class IterateurSequenceListe implements Iterateur {
     SequenceListe liste;
     ListeChainee prPrecedant, precedant, courant;
+    boolean supprime;
 
     public IterateurSequenceListe(SequenceListe s) {
         this.liste = s;
         this.precedant = null;
         this.prPrecedant = null;
         this.courant = s.tete;
+        this.supprime = false;
     }
 
     @Override
@@ -22,22 +24,17 @@ public class IterateurSequenceListe implements Iterateur {
             throw new NoSuchElementException();
         
         int result = this.courant.val;
-        if (this.precedant == null) {
-           this.precedant = this.courant;
-        } else {
-            this.prPrecedant = this.precedant;
-            this.precedant = this.courant;
-        } 
+        this.prPrecedant = this.precedant;
+        this.precedant = this.courant; 
         this.courant = this.courant.suiv;
+        this.supprime = true;
         return result;
     }
 
     @Override
     public void supprime() {
-        if (this.precedant == null) 
+        if (!this.supprime) 
             throw new IllegalStateException("Appel de supprime sans appel préalable de prochain !");
-
-        this.precedant = null;
 
         if (this.prPrecedant == null) {
             this.liste.tete = this.courant;
@@ -47,6 +44,7 @@ public class IterateurSequenceListe implements Iterateur {
         if (this.precedant == this.liste.queue) {
             this.liste.queue = this.prPrecedant;
         }
-        this.precedant = null;
+        this.precedant = prPrecedant;
+        this.supprime = false;
     }
 }
