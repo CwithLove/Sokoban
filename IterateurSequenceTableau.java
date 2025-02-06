@@ -1,45 +1,50 @@
-public class IterateurSequenceTableau implements Iterateur {
-    SequenceTableau sequence;
-    int precedant, courant, nbReste;
+import java.util.NoSuchElementException;
 
-    public IterateurSequenceTableau(SequenceTableau s) {
-        this.sequence = s;
-        this.courant = 0;
-        this.precedant = -1;
-        this.nbReste = this.sequence.len;
+public class IterateurSequenceTableau<T> implements Iterateur<T> {
+    SequenceTableau<T> seq;
+    int pred, courant, rang;
+
+    public IterateurSequenceTableau(SequenceTableau<T> s) {
+        this.seq = s;
+        this.rang = 0;
+        this.courant = s.start;
+        this.pred = -1;
     }
 
     @Override
     public boolean aProchain() {
-        return this.nbReste > 0;
+        return this.rang < this.seq.len;
     }
 
     @Override
-    public int prochain() {
-        int res =  this.sequence.elements[this.courant];
-        this.precedant = this.courant;
-        this.nbReste--;
-        if (this.courant <= this.sequence.len - 1) {
-            this.courant++;
+    @SuppressWarnings("unchecked")
+    public T prochain() {
+        if (aProchain()) {
+            this.pred = this.courant;
+            this.courant = (this.courant + 1) % this.seq.elements.length;
+            this.rang++;
+            return (T) this.seq.elements[this.pred];
         } else {
-            this.courant = 0;
+            throw new NoSuchElementException();
         }
-        return res;
     }
 
     @Override
     public void supprime() {
-        System.out.println("precedant: " + this.precedant + " courant: " + this.courant);
-        if (this.precedant == -1 || this.sequence.len == 0 || this.precedant == this.courant) {
+        if (this.pred != -1) {
+            this.courant = this.pred;
+            int i = this.rang;
+            while (i < this.seq.len) {
+                int next = (this.pred + 1) % this.seq.elements.length;
+                this.seq.elements[pred] = this.seq.elements[next];
+                this.pred = next;
+                i++;
+            }
+            this.pred = -1;
+            this.rang--;
+            this.seq.len--;
+        } else {
             throw new IllegalStateException();
-        }
-        
-        this.courant = this.precedant;
-        int i = this.precedant;
-        for (int count = this.nbReste; count > 0; count--) {
-            this.sequence.elements[i] = this.sequence.elements[(i + 1) % this.sequence.len];
-            i = (i + 1) % this.sequence.len;
-        }   
-        this.sequence.len--;
+        }    
     }
 }

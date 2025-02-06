@@ -1,62 +1,60 @@
-import java.util.Arrays;
-
-public class SequenceTableau implements interfaceSequence {
-    int[] elements;
+public class SequenceTableau<T> implements Sequence<T> {
+    Object[] elements;
     int len, start;
 
     public SequenceTableau() {
-        elements = new int[1];
+        this.elements = new Object[1];
         len = 0;
         start = 0;
-
     }
 
     @Override
-    public Iterateur iterateur() {
-        return new IterateurSequenceTableau(this);
+    public Iterateur<T> iterateur() {
+        return new IterateurSequenceTableau<>(this);
     }
 
     private void redimensionne() {
         if (this.len >= this.elements.length) {
             int newLen = this.len * 2;
-            int[] newElements = new int[newLen];
+            Object[] newElements;
+
+            newElements = new Object[newLen];
             int aCopier = this.len;
-            for (int i = 0; i < this.len; i++) {
+            for (int i = 0; i < aCopier; i++) {
                 newElements[i] = extraitTete();
             }
-            this.elements = newElements;
             this.start = 0;
             this.len = aCopier;
+            this.elements = newElements;
         }
     }
 
     @Override
-    public void insereTete(int element) {
+    public void insereTete(T element) {
         redimensionne();
         start -= 1;
-        this.len++;
         if (start < 0) {
             start = elements.length - 1;
         }
         elements[start] = element; 
+        this.len++;
     }
 
     @Override
-    public void insereQueue(int element) {
+    public void insereQueue(T element) {
         redimensionne();
         this.elements[(start + this.len) % this.elements.length] = element;
         this.len++;
     }
 
     @Override
-    public int extraitTete() {
+    public T extraitTete() {
         if (estVide()) 
             throw new RuntimeException("Sequence vide !");
         
-        int result = elements[start++];
-        if (start >= elements.length) {
-            start = 0;
-        }
+        @SuppressWarnings("unchecked")
+        T result = (T) elements[start];
+        start = (start + 1) % elements.length;
         this.len--;
         return result;
     }
@@ -79,5 +77,4 @@ public class SequenceTableau implements interfaceSequence {
 		resultat += " ]";
 		return resultat;
 	}
-
 }

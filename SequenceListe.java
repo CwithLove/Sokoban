@@ -1,28 +1,25 @@
-class SequenceListe implements interfaceSequence {
-    ListeChainee tete, queue;
+public class SequenceListe<T> implements Sequence<T> {
+    Noeud<T> tete, queue;
 
-    public SequenceListe() {
-        this.tete = null;
-        this.queue = null;
-    }
-
-    public Iterateur iterateur() {
-        return new IterateurSequenceListe(this);
+    public Iterateur<T> iterateur() {
+        return new IterateurSequenceListe<>(this);
     }
 
     @Override
-    public void insereTete(int element) {
-        ListeChainee newElement = new ListeChainee(element);
-        if (this.queue == null) {
+    public void insereTete(T element) {
+
+        Noeud<T> newElement = new Noeud<>(element, tete);
+        if (this.tete == null) {
             this.queue = newElement;
+            this.tete = newElement;
+        } else {
+            this.tete = newElement;
         }
-        newElement.suiv = this.tete;
-        this.tete = newElement;
     }
 
     @Override
-    public void insereQueue(int element) {
-        ListeChainee newElement = new ListeChainee(element);
+    public void insereQueue(T element) {
+        Noeud<T> newElement = new Noeud<T>(element, null);
         if (this.queue == null || this.tete == null) {
             this.queue = newElement;
             this.tete = newElement;
@@ -34,12 +31,11 @@ class SequenceListe implements interfaceSequence {
     }
 
     @Override
-    public int extraitTete() {
+    public T extraitTete() {
         if (estVide()) 
             throw new RuntimeException("Sequence vide !");
         
-        int result;
-        result = this.tete.val;
+        T result = this.tete.val;
         this.tete = this.tete.suiv;
         if (this.tete == null) {
             this.queue = null;
@@ -55,7 +51,7 @@ class SequenceListe implements interfaceSequence {
     public String toString() {
         String resultat = "SequenceListe [ ";
         boolean premier = true;
-        ListeChainee m = tete;
+        Noeud<T> m = tete;
         while (m != null) {
             if (!premier)
                 resultat += ", ";

@@ -3,11 +3,11 @@ import java.util.Random;
 public class TestSequence {
 	static int min, max, count;
 
-	static int operation(interfaceSequence seq, int code, int pos) {
+	static int operation(Sequence<Integer> seq, int code, int pos) {
 		int s = Integer.MIN_VALUE;
 		System.out.println(seq);
 		System.out.print("Affichage avec itérateur :");
-		Iterateur it = seq.iterateur();
+		Iterateur<Integer> it = seq.iterateur();
 		while (it.aProchain()) {
 			System.out.print(" " + it.prochain());
 		}
@@ -58,9 +58,9 @@ public class TestSequence {
 
 	public static void main(String[] args) {
 		Random r = new Random();
-		interfaceSequence s1, s2;
-		s1 = new SequenceTableau();
-		s2 = new SequenceListe();
+		Sequence<Integer> s1, s2;
+		s1 = new SequenceTableau<>();
+		s2 = new SequenceListe<>();
 
 		assert (s1.estVide());
 		assert (s2.estVide());

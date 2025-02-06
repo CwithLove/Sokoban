@@ -1,9 +1,9 @@
-public interface Iterateur {
+// A COMPLETER Them <T>
+public interface Iterateur<T> {
     
-
     boolean aProchain();
     
-    int prochain();
+    T prochain();
     
     void supprime();
 }

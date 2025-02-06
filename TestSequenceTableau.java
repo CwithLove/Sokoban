@@ -4,7 +4,7 @@ import java.util.Random;
 public class TestSequenceTableau {
     static int min, max, count;
 
-    static int operation(SequenceTableau seq, int code) {
+    static int operation(SequenceTableau<Integer> seq, int code) {
         int s;
         System.out.println("\n" + seq);
         System.out.println("code: " + code);
@@ -38,9 +38,8 @@ public class TestSequenceTableau {
 
     public static void main(String[] args) {
         Random r = new Random();
-        // Le test est spécifique à la classe SequenceTableau, nous factoriserons plus
-        // tard
-        SequenceTableau s = new SequenceTableau();
+
+        SequenceTableau<Integer> s = new SequenceTableau<Integer>();
 
         assert (s.estVide());
         min = -1;

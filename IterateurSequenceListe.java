@@ -1,11 +1,11 @@
 import java.util.NoSuchElementException;
 
-public class IterateurSequenceListe implements Iterateur {
-    SequenceListe liste;
-    ListeChainee prPrecedant, precedant, courant;
+public class IterateurSequenceListe<T> implements Iterateur<T> {
+    SequenceListe<T> liste;
+    Noeud<T> prPrecedant, precedant, courant;
     boolean supprime;
 
-    public IterateurSequenceListe(SequenceListe s) {
+    public IterateurSequenceListe(SequenceListe<T> s) {
         this.liste = s;
         this.precedant = null;
         this.prPrecedant = null;
@@ -19,21 +19,21 @@ public class IterateurSequenceListe implements Iterateur {
     }
 
     @Override
-    public int prochain() {
-        if (!aProchain()) 
+    public T prochain() {
+        if (aProchain()) {
+            this.prPrecedant = this.precedant;
+            this.precedant = this.courant;
+            this.courant = this.courant.suiv;
+            this.supprime = true;
+            return this.precedant.val;
+        } else {
             throw new NoSuchElementException();
-        
-        int result = this.courant.val;
-        this.prPrecedant = this.precedant;
-        this.precedant = this.courant; 
-        this.courant = this.courant.suiv;
-        this.supprime = true;
-        return result;
+        }
     }
 
     @Override
     public void supprime() {
-        if (!this.supprime) 
+        if (!this.supprime)
             throw new IllegalStateException("Appel de supprime sans appel préalable de prochain !");
 
         if (this.prPrecedant == null) {

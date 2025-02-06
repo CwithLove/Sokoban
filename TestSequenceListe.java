@@ -3,7 +3,7 @@ import java.util.Random;
 public class TestSequenceListe {
 	static int min, max, count;
 
-	static int operation(SequenceListe seq, int code) {
+	static int operation(SequenceListe<Integer> seq, int code) {
 		int s;
 		System.out.println(seq);
 		switch (code) {
@@ -36,9 +36,8 @@ public class TestSequenceListe {
 
 	public static void main(String[] args) {
 		Random r = new Random();
-		// Le test est spécifique à la classe SequenceListe, nous factoriserons plus
-		// tard
-		SequenceListe s = new SequenceListe();
+
+		SequenceListe<Integer> s = new SequenceListe<Integer>();
 
 		assert (s.estVide());
 		min = -1;
