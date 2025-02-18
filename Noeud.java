@@ -4,6 +4,6 @@ public class Noeud<T> {
 
     Noeud(T val, Noeud<T> suiv) {
         this.val = val;
-        this.suiv = null;
+        this.suiv = suiv;
     }
 }
