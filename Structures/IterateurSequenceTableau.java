@@ -1,3 +1,5 @@
+package Structures;
+
 import java.util.NoSuchElementException;
 
 public class IterateurSequenceTableau<T> implements Iterateur<T> {

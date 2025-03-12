@@ -1,3 +1,5 @@
+package Structures;
+
 public class SequenceListe<T> implements Sequence<T> {
     Noeud<T> tete, queue;
 

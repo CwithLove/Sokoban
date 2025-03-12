@@ -1,3 +1,5 @@
+package Structures;
+
 public class SequenceTableau<T> implements Sequence<T> {
     Object[] elements;
     int len, start;
@@ -13,7 +15,7 @@ public class SequenceTableau<T> implements Sequence<T> {
         return new IterateurSequenceTableau<>(this);
     }
 
-    private void redimensionne() {
+    public void redimensionne() {
         if (this.len >= this.elements.length) {
             int newLen = this.len * 2;
             Object[] newElements;

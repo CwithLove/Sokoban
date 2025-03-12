@@ -1,3 +1,5 @@
+package Structures;
+
 public class Noeud<T> {
     T val;
     Noeud<T> suiv;

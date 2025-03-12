@@ -1,4 +1,5 @@
-// A COMPLETER Them <T>
+package Structures;
+
 public interface Iterateur<T> {
     
     boolean aProchain();

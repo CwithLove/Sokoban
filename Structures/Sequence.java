@@ -1,3 +1,5 @@
+package Structures;
+
 public interface Sequence<T> {
     public Iterateur<T> iterateur();
 
